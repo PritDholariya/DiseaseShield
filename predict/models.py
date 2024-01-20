@@ -10,7 +10,7 @@ class UserDetails(models.Model):
     DOB = models.DateField(blank=True,null=True)
     email = models.CharField(max_length=50,unique=True)
     password = models.CharField(max_length=17)
-    profile_image = models.BinaryField()
+    profile_image = models.TextField()
 
     def __str__(self):
         return self.username

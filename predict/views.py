@@ -2,14 +2,11 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-# from django.contrib.auth import authenticate, login
-# from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from rest_framework import status
 from .serializers import userSerializers
 from .models import UserDetails
 from rest_framework_simplejwt.tokens import RefreshToken
-import base64
+from django.db.models import Q # for complex queries
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -21,28 +18,25 @@ def signup(request):
         firstname = request.data.get('firstname')
         lastname = request.data.get('lastname')
         dob = request.data.get('dob')
-        profile_image = request.data.get('profile_image')
+        profile_image = request.data.get('profileimage')
 
-        print(username,email,password,firstname, lastname, dob, profile_image)
-        # if not username or not password or not email:
-        #     return Response({"status":"failed",'message': 'All username, email and password are required'}, status=status.HTTP_400_BAD_REQUEST)
+        user = UserDetails.objects.filter(Q(username=username) | Q(email=email)).first()
+        if not user:
+            user = UserDetails.objects.create(username=username, email=email)
+        else:
+            return Response({"status":"failed",'message': 'User with this username or email already exists'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # user, created = UserDetails.objects.get_or_create(username=username, password=password, email=email, firstname=firstname, lastname=lastname, dob=dob)
-        # if not created:
-        #     return Response({"status":"failed",'message': 'User with this username or email already exists'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # user.profile_image = base64.b64encode(profile_image)
-        # user.save()
-        # refresh = RefreshToken.for_user(user)
-        # access_token = str(refresh.access_token)
-        # user = userSerializers(user).data
-        # user.pop('password')
-        return Response({"status":"success", 'message': 'Signup successful'}, status=status.HTTP_201_CREATED)
-        # serializer = userSerializers(data=request.data)
-        # if serializer.is_valid():
-        #     serializer.save()
-        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        user.firstname = firstname
+        user.lastname = lastname
+        user.DOB = dob
+        user.profile_image = profile_image
+        user.password = password
+        user.save()
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        user = userSerializers(user).data
+        user.pop('password')
+        return Response({"status":"success",'token':access_token,'userInfo':user,'message': 'Signup successful'}, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])
@@ -51,7 +45,6 @@ def login_view(request):
     if request.method == 'POST':
         username = request.data.get('username')
         password = request.data.get('password')
-        # user = authenticate(request, username=username, password=password)
 
         if not username or not password:
             return Response({"status":"failed",'message': 'Both username and password are required'}, status=status.HTTP_400_BAD_REQUEST)
