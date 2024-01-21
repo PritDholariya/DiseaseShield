@@ -1,9 +1,8 @@
-// Header.js
 
 import { Icon } from "@iconify/react";
-import IconText from "./components/IconText";
+import IconText from "./IconText";
 
-export default function Header() {
+export default function Header({children}) {
 
   return (
     <div className="h-screen w-full flex">
@@ -58,8 +57,8 @@ export default function Header() {
             </div>
           </div>
         </div>
-
       </div>
+      {children}
     </div>
   );
 }
