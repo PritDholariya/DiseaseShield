@@ -12,6 +12,7 @@ const LoginPage = () => {
           password
         });
         console.log(response.data);
+        
         // Handle successful login, e.g., store user token and redirect to home page
       } catch (error) {
         // console.error('Login failed:', error.response.data);
