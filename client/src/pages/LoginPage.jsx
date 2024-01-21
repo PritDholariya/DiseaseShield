@@ -1,72 +1,80 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-    const handleLogin = async () => {
-      try {
-        setLoading(true)
-        const response = await axios.post('http://localhost:8000/api/login/', {
-          username,
-          password
-        });
-        setLoading(false);
-        if (response.data?.status == "success") {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", JSON.stringify(response.data.userInfo));
-          toast.success("Login successful",  {position: toast.POSITION.TOP_RIGHT})
-          navigate("/")
-        } else {
-          toast.error(response.data?.message, {position: toast.POSITION.BOTTOM_LEFT})
-        }
-        // Handle successful login, e.g., store user token and redirect to home page
-      } catch (error) {
-        // console.error('Login failed:', error.response.data);
-        // Handle login error, e.g., display an error message
+  const handleLogin = async (e) => {
+    try {
+      setLoading(true)
+      const response = await axios.post('http://localhost:8000/api/login/', {
+        username,
+        password
+      });
+      setLoading(false);
+      if (response.data?.status == "success") {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.userInfo));
+        toast.success("Login successful")
+        navigate("/")
+      } else {
+        toast.error(response.data?.message)
       }
-    };
-  
-    return (
-      <div className="max-w-md mx-auto mt-8 p-4 bg-white rounded shadow-md">
-        <h2 className="text-2xl font-semibold mb-4">Login</h2>
-        <form>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Username:</label>
-            <input
-              type="text"
-              className="mt-1 p-2 border rounded w-full focus:outline-none focus:ring focus:border-blue-300"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+      // Handle successful login, e.g., store user token and redirect to home page
+    } catch (error) {
+      console.error('Login failed:', error);
+      // Handle login error, e.g., display an error message
+    }
+  };
+
+  return (
+    <section className="bg-transparent">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+        <Link to="/" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+        <span className="material-symbols-outlined mr-2">cardiology</span>
+          DiseaseShield
+        </Link>
+        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              Sign in to your account
+            </h1>
+            <form className="space-y-4 md:space-y-6">
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required />
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                <input type="password"  value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-start">
+                  <div className="flex items-center h-5">
+                    <input id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" />
+                  </div>
+                  <div className="ml-3 text-sm">
+                    <label className="text-gray-500 dark:text-gray-300">Remember me</label>
+                  </div>
+                </div>
+                <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+              </div>
+              <button type="button" onClick={handleLogin} name="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                Don't have an account yet? <Link to="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</Link>
+              </p>
+            </form>
           </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600">Password:</label>
-            <input
-              type="password"
-              className="mt-1 p-2 border rounded w-full focus:outline-none focus:ring focus:border-blue-300"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <button
-            isLoading={loading}
-            isDisabled={loading}
-            type="button"
-            className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-            onClick={handleLogin}
-          >
-            Login
-          </button>
-        </form>
+        </div>
       </div>
-    );
+    </section>
+  );
 };
 
 export default LoginPage;
