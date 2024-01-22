@@ -7,6 +7,7 @@ from .serializers import userSerializers
 from .models import UserDetails
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db.models import Q # for complex queries
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -62,3 +63,38 @@ def login_view(request):
             return Response({"status":"success",'token': access_token, 'userInfo':user,'message': 'Login successful'}, status=status.HTTP_200_OK)
         else:
             return Response({"status":"failed",'message': 'Password is Incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_profile(request):
+    print(request.headers)
+    print(request.headers.get('Authorization'))
+    user = request.user  # Assuming you're using Django's built-in User model
+    
+    try:
+        user_details = UserDetails.objects.get(username=user.username)
+    except UserDetails.DoesNotExist:
+        return Response({'error': 'User details not found.'}, status=404)
+
+    # Serialize user details
+    serializer = userSerializers(user_details)  # Fix the naming here
+    serialized_data = serializer.data
+
+    return Response(serialized_data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_info(request):
+    user = request.user
+    print("hello")
+    user_data = {
+        'username': user.username,
+        'profile_image_url': user.profile.image.url if user.profile.image else None,
+        # Add more user data fields as needed
+    }
+    serializer = userSerializers(user_data)  # Fix the naming here
+    serialized_data = serializer.data
+
+    return Response(serialized_data)

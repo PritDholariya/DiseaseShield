@@ -40,10 +40,12 @@ export default function Header({children}) {
             <IconText
               iconName={"mdi:register"}
               displayText={"Sign Up"}
+              targetLink={"/signup"}
             />
             <IconText
               iconName={"material-symbols:login-sharp"}
               displayText={"Log In"}
+              targetLink={"/login"}
             />
           </div>
 
