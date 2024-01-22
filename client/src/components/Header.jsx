@@ -19,6 +19,7 @@ export default function Header({children}) {
             <IconText
               iconName={"material-symbols:home"}
               displayText={"Home"}
+              targetLink={'/'}
               active
             />
             <IconText
@@ -27,7 +28,8 @@ export default function Header({children}) {
             />
             <IconText
               iconName={"icomoon-free:books"}
-              displayText={"History   "}
+              displayText={"History"}
+              targetLink={'/history'}
             />
             <IconText
               iconName={"material-symbols:add-box"}
@@ -35,15 +37,18 @@ export default function Header({children}) {
             />
             <IconText
               iconName={"jam:medical"}
+              targetLink={"/disease"}
               displayText={"Check from symptoms"}
             />
             <IconText
               iconName={"mdi:register"}
               displayText={"Sign Up"}
+              targetLink={"/signup"}
             />
             <IconText
               iconName={"material-symbols:login-sharp"}
               displayText={"Log In"}
+              targetLink={"/login"}
             />
           </div>
 

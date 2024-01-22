@@ -22,7 +22,7 @@ const LoginPage = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.userInfo));
         toast.success("Login successful")
-        navigate("/loggedhome")
+        navigate("/")
       } else {
         toast.error(response.data?.message)
       }
