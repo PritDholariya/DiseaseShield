@@ -1,22 +1,27 @@
-import React, { useState } from 'react';
 import LoggedInHeader from "../components/LoggedInHeader";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import CustomModal from "../components/Modal"; // Import your CustomModal component
 
 const HeartAttackPage = () => {
   const [formData, setFormData] = useState({
-    age: '',
-    sex: '',
-    cp: '',
-    trestbps: '',
-    chol: '',
-    fbs: '',
-    restecg: '',
-    thalach: '',
-    exang: '',
-    oldpeak: '',
-    slope: '',
-    ca: '',
-    thal: '',
+    age: "",
+    sex: "",
+    cp: "",
+    trestbps: "",
+    chol: "",
+    fbs: "",
+    restecg: "",
+    thalach: "",
+    exang: "",
+    oldpeak: "",
+    slope: "",
+    ca: "",
+    thal: "",
   });
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [predictionResult, setPredictionResult] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,26 +31,22 @@ const HeartAttackPage = () => {
     }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // Handle the form data submission, for example, send it to the server
-    console.log(formData);
-    // Optionally, you can reset the form after submission
-    setFormData({
-      age: '',
-      sex: '',
-      cp: '',
-      trestbps: '',
-      chol: '',
-      fbs: '',
-      restecg: '',
-      thalach: '',
-      exang: '',
-      oldpeak: '',
-      slope: '',
-      ca: '',
-      thal: '',
-    });
+    try {
+      const response = await axios.post("http://localhost:8000/api/disease/heart_attack", {
+        formData,
+      });
+      const prediction = response.data.prediction;
+      setPredictionResult(prediction === "The Person has Heart Disease");
+      setModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -55,12 +56,9 @@ const HeartAttackPage = () => {
           <h2 className="text-3xl font-bold text-red-800 mb-4 text-center">
             Heart Attack Checker
           </h2>
-          {/* Your existing content */}
           <p className="mb-4 text-center text-gray-600">
             Check if you are at risk of a heart attack! ❤️🚨
           </p>
-
-          {/* Include the form within the page */}
           <form onSubmit={handleFormSubmit} className="grid grid-cols-3 gap-4 mt-6">
             {Object.keys(formData).map((field) => (
               <div key={field} className="mb-4">
@@ -89,8 +87,25 @@ const HeartAttackPage = () => {
           </form>
         </div>
       </div>
+      <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} />
     </LoggedInHeader>
   );
 };
 
 export default HeartAttackPage;
+
+    // setFormData({
+    //   age: '',
+    //   sex: '',
+    //   cp: '',
+    //   trestbps: '',
+    //   chol: '',
+    //   fbs: '',
+    //   restecg: '',
+    //   thalach: '',
+    //   exang: '',
+    //   oldpeak: '',
+    //   slope: '',
+    //   ca: '',
+    //   thal: '',
+    // });

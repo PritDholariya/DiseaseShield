@@ -8,6 +8,7 @@ from .models import UserDetails
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db.models import Q # for complex queries
 from rest_framework.permissions import IsAuthenticated
+from .ml_models.disease import *
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -98,3 +99,19 @@ def get_user_info(request):
     serialized_data = serializer.data
 
     return Response(serialized_data)
+
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def heart_attack(request):
+    if request.method == 'POST':
+        data = request.data.get("formData")
+        input_data = {key: float(value) for key, value in data.items()}
+        prediction = predict_heart_attack(input_data)
+        print("back")
+        print(prediction)
+        # Return the prediction as a JSON response
+        return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction}, status=status.HTTP_200_OK)
+
+    return Response({"status": "error", 'message': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)
