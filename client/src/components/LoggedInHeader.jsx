@@ -5,19 +5,24 @@ import IconText from "./IconText";
 import { UserContext } from "../UserContext";
 import { useContext } from "react";
 import axios from "axios"; // Import axios for making HTTP requests
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 
 
 export default function LoggedInHeader({ children, curActiveScreen }) {
 
-
   const [isloading, setisloading] = useState(true);
   const [user, setUser] = useState();
+  const navigate = useNavigate();
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user')))
     setisloading(false);
   }, []);
 
+  const handleLogout = async (e) => {
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    navigate("/")
+  };
 
   // const { user, setUser } = useContext(UserContext);
 
@@ -49,7 +54,7 @@ export default function LoggedInHeader({ children, curActiveScreen }) {
 
       {isloading && <p>loading..</p>}
 
-      {!isloading && <div className="h-full w-full flex ">
+      {!isloading && <div className="h-screen w-full flex ">
         {/* This first div will be the left panel */}
         <div className="h-full w-1/5 bg-black flex flex-col justify-between pb-10">
           <div>
@@ -95,16 +100,18 @@ export default function LoggedInHeader({ children, curActiveScreen }) {
               <IconText
                 iconName={"jam:medical"}
                 displayText={"Check from symptoms"}
+                targetLink={"/symtoms"}
               />
 
-            </div>
-          </div>
-          <div className="mt-64">
             <IconText
               iconName={"material-symbols:logout"}
               displayText={"Logout"}
+              onClick={handleLogout}
+              targetLink={"/"}
             />
+            </div>
           </div>
+          
           <div className="px-5">
             <div className="border border-gray-100 text-white w-2/5 flex px-2 py-1 rounded-full items-center justify-center hover:border-white cursor-pointer">
               <Icon icon="carbon:earth-europe-africa" />

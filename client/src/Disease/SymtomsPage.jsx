@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import LoggedInHeader from '../components/LoggedInHeader';
-// import { FiPlus, FiTrash } from 'react-icons/fi';
+import { FiPlus, FiTrash } from 'react-icons/fi';
 
 const SymptomsPage = () => {
   const [symptoms, setSymptoms] = useState([]);
