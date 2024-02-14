@@ -1,7 +1,9 @@
+User
 import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
+import Layout from './Layout';
 import HomePage from './pages/HomePage';
 import LoggedHome from './pages/LoggedHome';
 import { UserContextProvider } from './UserContext';
@@ -11,44 +13,40 @@ import ParkinsonPage from './Disease/ParkinsonPage';
 import HeartattackPage from './Disease/HeartattackPage';
 import SymtomsPage from './Disease/SymtomsPage';
 import HistoryPage from './pages/HistoryPage';
-import { useEffect, useState } from 'react';
 
-// const isAuthenticated = localStorage.getItem('token') !== null;
+const isAuthenticated = localStorage.getItem('token') !== null;
 
 function App() {
-  const [isAuthenticated, setisAuthenticated] = useState(null)
-
-  useEffect(() => {
-    setisAuthenticated(localStorage.getItem('token'))
-  }, [isAuthenticated]);
 
   return (
     <div className='App w-screen'>
       <BrowserRouter>
-        {isAuthenticated ? (
-          <UserContextProvider>
+      {isAuthenticated ? (
+      <UserContextProvider>
             <Routes>
-              <Route path="/" element={<LoggedHome />} />
-              <Route path="/history" element={<HistoryPage />} />
-              <Route path="/disease" element={<DiseaseSpecialist />} />
-              <Route path="/symtoms" element={<SymtomsPage />} />
-              <Route path="/disease/diabetes" element={<DiabetesPage />} />
-              <Route path="/disease/parkinson" element={<ParkinsonPage />} />
-              <Route path="/disease/heartattack" element={<HeartattackPage />} />
-              <Route path="*" element={<LoginPage />} />
-            </Routes>
-          </UserContextProvider>
-        ) : (
+                <Route path="/" element={<LoggedHome/>} />
+                <Route path="/history" element={<HistoryPage/>} />
+                <Route path="/disease" element={<DiseaseSpecialist/>} />
+                <Route path="/symtoms" element={<SymtomsPage/>} />
+                <Route path="/disease/diabetes" element={<DiabetesPage/>} />
+                <Route path="/disease/parkinson" element={<ParkinsonPage/>} />
+                <Route path="/disease/heartattack" element={<HeartattackPage/>} />
+                <Route path="*" element={<LoginPage />} />
+              </Routes>
+        </UserContextProvider>
+        ):( 
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="*" element={<LoginPage />} />
-          </Routes>
+          <Route path="/" element={<HomePage/>} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="*" element={<LoginPage />} />
+        </Routes>
         )}
+
+        
       </BrowserRouter>
     </div>
   )
 }
 
-export default App;
+export default App
