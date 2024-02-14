@@ -28,7 +28,7 @@ const HistoryPage = () => {
 
   return (
     <LoggedInHeader>
-      <div className="history-page flex ml-72 items-center h-full ">
+      <div className="history-page w-4/5 flex ml-72 items-center h-full ">
         <div className="bg-white p-8 shadow-md rounded-md w-full max-w-2xl">
           <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">Disease History</h2>
           {history.length > 0 ? (

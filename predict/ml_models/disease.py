@@ -3,26 +3,12 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import LabelEncoder
+from sklearn.ensemble import RandomForestClassifier
 
 def predict_heart_attack(input_data):
     # Load the CSV data into a Pandas DataFrame
-    heart_data = pd.read_csv('C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/heart_disease_data.csv')
-
-    # # Display some information about the dataset
-    # print("First 5 rows of the dataset:")
-    # print(heart_data.head())
-
-    # # Number of rows and columns in the dataset
-    # print("\nNumber of rows and columns in the dataset:")
-    # print(heart_data.shape)
-
-    # # Information about the data types and non-null counts
-    # print("\nInformation about the data:")
-    # print(heart_data.info())
-
-    # # Check for missing values
-    # print("\nMissing values:")
-    # print(heart_data.isnull().sum())
+    heart_data = pd.read_csv('E:\sem6\SDP\DiseaseShield\predict\ml_models\heart_disease_data.csv')
 
     # Statistical measures about the data
     print("\nStatistical measures about the data:")
@@ -62,3 +48,45 @@ def predict_heart_attack(input_data):
     else:
         return 'The Person has Heart Disease'
 
+
+def predict_from_symptoms(syptoms):
+    data = pd.read_csv('E:\sem6\SDP\DiseaseShield\predict\ml_models\Training.csv')
+
+    # Extract features (X) and target variable (y)
+    X = data.drop(['prognosis'], axis=1)  # Features
+    y = data['prognosis']  # Target variable
+
+
+    # Encode the target variable
+    le = LabelEncoder()
+    y = le.fit_transform(y)
+
+
+    # Create a DecisionTreeClassifier model
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+
+    # Train the model
+    model.fit(X, y)
+
+
+    # Get user input for symptoms
+    user_symptoms = syptoms   # Replace with actual symptoms
+
+
+    # Create a DataFrame with all symptoms set to 0
+    user_data = pd.DataFrame(0, index=range(len(user_symptoms)), columns=X.columns)
+
+
+    # Set the values for the provided symptoms to 1
+    user_data.loc[0, user_symptoms] = 1
+
+
+    # Predict the disease based on user input
+    predicted_disease = le.inverse_transform(model.predict(user_data))
+
+
+    # Print the predicted disease
+    print("Predicted Disease:", predicted_disease)
+
+    return predicted_disease
