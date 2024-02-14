@@ -1,8 +1,7 @@
 import './App.css'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
-import Layout from './Layout';
 import HomePage from './pages/HomePage';
 import LoggedHome from './pages/LoggedHome';
 import { UserContextProvider } from './UserContext';
@@ -12,10 +11,16 @@ import ParkinsonPage from './Disease/ParkinsonPage';
 import HeartattackPage from './Disease/HeartattackPage';
 import SymtomsPage from './Disease/SymtomsPage';
 import HistoryPage from './pages/HistoryPage';
+import { useEffect, useState } from 'react';
 
-const isAuthenticated = localStorage.getItem('token') !== null;
+// const isAuthenticated = localStorage.getItem('token') !== null;
 
 function App() {
+  const [isAuthenticated, setisAuthenticated] = useState(null)
+
+  useEffect(() => {
+    setisAuthenticated(localStorage.getItem('token'))
+  }, [isAuthenticated]);
 
   return (
     <div className='App w-screen'>

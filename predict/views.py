@@ -115,3 +115,17 @@ def heart_attack(request):
         return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction}, status=status.HTTP_200_OK)
 
     return Response({"status": "error", 'message': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def predict_disease(request):
+    if request.method == 'POST':
+        data = request.data.get("symptoms")
+        # input_data = {key: (value) for key, value in data.items()}
+        prediction = predict_from_symptoms(data)
+        print(prediction)
+        # Return the prediction as a JSON response
+        return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction}, status=status.HTTP_200_OK)
+
+    return Response({"status": "error", 'message': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)

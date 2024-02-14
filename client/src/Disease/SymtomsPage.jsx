@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import LoggedInHeader from '../components/LoggedInHeader';
 import { FiPlus, FiTrash } from 'react-icons/fi';
 
@@ -40,15 +41,23 @@ const SymptomsPage = () => {
     localStorage.setItem('symptoms', JSON.stringify(updatedSymptoms));
   };
 
-  const predictDisease = () => {
+  const predictDisease = async (e) => {
     // Send the symptoms to your ML model for prediction
     // You can use an API endpoint to make a request to your ML model
     // Update the UI with the predicted disease or other relevant information
     console.log('Symptoms:', symptoms);
     // Example: You can replace this with an actual API request
-    // axios.post('/api/predict', { symptoms })
-    //   .then(response => console.log('Prediction:', response.data))
-    //   .catch(error => console.error('Error predicting disease:', error));
+    try {
+      const response = await axios.post("http://localhost:8000/api/disease/symptoms", {
+        'symptoms':symptoms,
+      });
+      const prediction = response.data.prediction;
+      console.log(prediction)
+      // setPredictionResult(prediction === "The Person has Heart Disease");
+      // setModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   };
 
   return (

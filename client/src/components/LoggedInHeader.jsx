@@ -56,7 +56,7 @@ export default function LoggedInHeader({ children, curActiveScreen }) {
 
       {!isloading && <div className="h-screen w-full flex ">
         {/* This first div will be the left panel */}
-        <div className="h-full w-1/5 bg-black flex flex-col justify-between pb-10">
+        <div className="h-full w-1/5  bg-black flex flex-col justify-between pb-10">
           <div>
             {/* This div is for logo */}
             <Link to={'/'}>
