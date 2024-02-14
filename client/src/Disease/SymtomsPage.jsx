@@ -44,6 +44,7 @@ const SymptomsPage = () => {
     // Send the symptoms to your ML model for prediction
     // You can use an API endpoint to make a request to your ML model
     // Update the UI with the predicted disease or other relevant information
+    localStorage.setItem("symtoms", JSON.stringify(symptoms));
     console.log('Symptoms:', symptoms);
     // Example: You can replace this with an actual API request
     // axios.post('/api/predict', { symptoms })
