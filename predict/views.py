@@ -1,7 +1,7 @@
 # views.py
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework import status
 from .serializers import userSerializers
 from .models import UserDetails
@@ -67,10 +67,11 @@ def login_view(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def get_user_profile(request):
     print(request.headers)
     print(request.headers.get('Authorization'))
+
     user = request.user  # Assuming you're using Django's built-in User model
     
     try:
@@ -125,6 +126,31 @@ def predict_disease(request):
         # input_data = {key: (value) for key, value in data.items()}
         prediction = predict_from_symptoms(data)
         print(prediction)
+        # Return the prediction as a JSON response
+        return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction}, status=status.HTTP_200_OK)
+
+    return Response({"status": "error", 'message': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def diabetes(request):
+    if request.method == 'POST':
+        data = request.data.get("formData")
+        input_data = [float(value) for value in data.values()]  # Convert dictionary values to list of floats
+        prediction = predict_diabetes(input_data)  # Assuming predict_diabetes is your prediction function
+        # Return the prediction as a JSON response
+        return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction}, status=status.HTTP_200_OK)
+
+    return Response({"status": "error", 'message': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def parkinson(request):
+    if request.method == 'POST':
+        data = request.data.get("formData")
+        input_data = [float(value) for value in data.values()]  # Convert dictionary values to list of floats
+        prediction = predict_parkinson(input_data)  # Assuming predict_parkinson is your prediction function
         # Return the prediction as a JSON response
         return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction}, status=status.HTTP_200_OK)
 

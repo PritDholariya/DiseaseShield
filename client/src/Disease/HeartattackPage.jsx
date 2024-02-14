@@ -87,7 +87,7 @@ const HeartAttackPage = () => {
           </form>
         </div>
       </div>
-      <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} />
+      <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} disease = {'Heart Attack'}/>
     </LoggedInHeader>
   );
 };

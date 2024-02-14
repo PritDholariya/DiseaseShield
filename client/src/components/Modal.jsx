@@ -17,7 +17,7 @@ const modalStyles = {
   },
 };
 
-const CustomModal = ({ isOpen, onRequestClose, predictionResult }) => {
+const CustomModal = ({ isOpen, onRequestClose, predictionResult , disease}) => {
   useEffect(() => {
     // Set the app element to the root of your app (where Modal is being used)
     Modal.setAppElement("#root");
@@ -29,11 +29,12 @@ const CustomModal = ({ isOpen, onRequestClose, predictionResult }) => {
       onRequestClose={onRequestClose}
       contentLabel="Prediction Result"
       style={modalStyles}
+      disease = {disease}
     >
       <div className="text-center p-4">
         <h2 className="text-2xl font-bold text-red-800 mb-2">Prediction Result</h2>
         <p className={`text-${predictionResult ? "red" : "green"}-700 mb-4`}>
-          {predictionResult ? "Person has Heart Disease" : "Person does not have Heart Disease"}
+          {predictionResult ? `Person has ${disease}` : `Person does not have ${disease}`}
         </p>
         <button
           onClick={onRequestClose}

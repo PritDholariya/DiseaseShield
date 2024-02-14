@@ -13,27 +13,28 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await axios.post('http://localhost:8000/api/login/', {
         username,
         password
       });
-      setLoading(false);
-      if (response.data?.status == "success") {
+      if (response.data?.status === "success") {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.userInfo));
-        toast.success("Login successful")
-        navigate("/")
+        toast.success("Login successful");
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/");
+        }, 2000); // Redirect after 2 seconds
       } else {
-        toast.error(response.data?.message)
+        toast.error(response.data?.message);
+        setLoading(false);
       }
-      // Handle successful login, e.g., store user token and redirect to home page
     } catch (error) {
       console.error('Login failed:', error);
-      // Handle login error, e.g., display an error message
+      setLoading(false);
     }
   };
-
   return (
     <section className="bg-transparent">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">

@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
 import LoggedInHeader from "../components/LoggedInHeader";
+import React, { useState } from "react";
+import axios from "axios";
+import CustomModal from "../components/Modal"; // Import your CustomModal component
 
 const DiabetesPage = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +15,9 @@ const DiabetesPage = () => {
     Age: '',
   });
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [predictionResult, setPredictionResult] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -21,36 +26,34 @@ const DiabetesPage = () => {
     }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // Handle the form data submission, for example, send it to the server
-    console.log(formData);
-    // Optionally, you can reset the form after submission
-    setFormData({
-      Pregnancies: '',
-      Glucose: '',
-      BloodPressure: '',
-      SkinThickness: '',
-      Insulin: '',
-      BMI: '',
-      DiabetesPedigreeFunction: '',
-      Age: '',
-    });
+    try {
+      const response = await axios.post("http://localhost:8000/api/disease/diabetes", {
+        formData,
+      });
+      const prediction = response.data.prediction;
+      setPredictionResult(prediction === "The Person is diabetic");
+      setModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
-    <LoggedInHeader >
+    <LoggedInHeader>
       <div className="diabetes-page flex items-center h-full">
-        <div className="bg-white p-8 ml-72 shadow-md rounded-md w-full max-w-md">
+        <div className="bg-white p-5 ml-72 shadow-md rounded-md w-full max-w-md">
           <h2 className="text-3xl font-bold text-blue-800 mb-4 text-center">
             Diabetes Checker
           </h2>
-          {/* Your existing content */}
-          <p className="mb-4 text-center text-gray-600 font-serif">
+          <p className="mb-4 text-center text-gray-600">
             Check if you have diabetes or not! 👍😎
           </p>
-
-          {/* Include the form within the page */}
           <form onSubmit={handleFormSubmit} className="grid grid-cols-2 gap-4 mt-6">
             {Object.keys(formData).map((field) => (
               <div key={field} className="mb-4">
@@ -79,6 +82,7 @@ const DiabetesPage = () => {
           </form>
         </div>
       </div>
+      <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} disease = {'Diabetes'}/>
     </LoggedInHeader>
   );
 };
