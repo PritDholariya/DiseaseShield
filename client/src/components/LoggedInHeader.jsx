@@ -8,7 +8,7 @@ import axios from "axios"; // Import axios for making HTTP requests
 import { Link , useNavigate} from "react-router-dom";
 
 
-export default function LoggedInHeader({ children, curActiveScreen }) {
+export default function LoggedInHeader({ children, curActiveScreen, setisAuthenticated }) {
 
   const [isloading, setisloading] = useState(true);
   const [user, setUser] = useState();
@@ -21,6 +21,7 @@ export default function LoggedInHeader({ children, curActiveScreen }) {
   const handleLogout = async (e) => {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
+    setisAuthenticated(null)
     navigate("/")
   };
 
@@ -80,6 +81,8 @@ export default function LoggedInHeader({ children, curActiveScreen }) {
               iconName={"material-symbols:home"}
               displayText={"Home"}
               targetLink={'/'}
+              active={curActiveScreen === "home"}
+
             />
             <IconText
               iconName={"material-symbols:search-rounded"}
@@ -89,6 +92,8 @@ export default function LoggedInHeader({ children, curActiveScreen }) {
               iconName={"icomoon-free:books"}
               displayText={"History   "}
               targetLink={'/history'}
+              active={curActiveScreen === "history"}
+
             />
             <IconText
               iconName={"material-symbols:add-box"}
@@ -101,6 +106,8 @@ export default function LoggedInHeader({ children, curActiveScreen }) {
                 iconName={"jam:medical"}
                 displayText={"Check from symptoms"}
                 targetLink={"/symtoms"}
+                active={curActiveScreen === "symtoms"}
+
               />
 
             <IconText

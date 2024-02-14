@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './../App.jsx'
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,6 +22,7 @@ const LoginPage = () => {
       if (response.data?.status == "success") {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.userInfo));
+        props.setisAuthenticated(response.data.token)
         toast.success("Login successful")
         navigate("/")
       } else {

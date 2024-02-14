@@ -28,7 +28,7 @@ function App() {
       {isAuthenticated ? (
       <UserContextProvider>
             <Routes>
-                <Route path="/" element={<LoggedHome/>} />
+                <Route path="/" element={<LoggedHome setisAuthenticated={setisAuthenticated}/>} />
                 <Route path="/history" element={<HistoryPage/>} />
                 <Route path="/disease" element={<DiseaseSpecialist/>} />
                 <Route path="/symtoms" element={<SymtomsPage/>} />
@@ -41,7 +41,7 @@ function App() {
         ):(
           <Routes>
           <Route path="/" element={<HomePage/>} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage setisAuthenticated={setisAuthenticated} />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="*" element={<LoginPage />} />
         </Routes>

@@ -8,7 +8,7 @@ import Header from '../components/Header';
 // import 'slick-carousel/slick/slick-theme.css';
 // import { Slide } from 'react-toastify';
 
-const LoggedHome = () => {
+const LoggedHome = (props) => {
 //   const [medicalImages, setMedicalImages] = useState([]);
 //   const [medicalArticles, setMedicalArticles] = useState([]);
 //   // const apiKeys = process.env.REACT_APP_NEWS_API_KEY;
@@ -74,7 +74,7 @@ const LoggedHome = () => {
   return (
     <div className='flex-auto float '>
       <div className=''>
-        <LoggedInHeader>
+        <LoggedInHeader curActiveScreen={"home"} setisAuthenticated={props.setisAuthenticated}>
           <Slider/>
         </LoggedInHeader>
       </div>
