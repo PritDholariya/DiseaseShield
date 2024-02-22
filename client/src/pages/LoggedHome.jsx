@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import LoggedInHeader from '../components/LoggedInHeader';
 import axios from 'axios';
-import Slider from '../components/Slider';
-import Header from '../components/Header';
 // import 'dotenv/config'
 // import 'slick-carousel/slick/slick.css';
 // import 'slick-carousel/slick/slick-theme.css';
@@ -75,7 +73,6 @@ const LoggedHome = (props) => {
     <div className='flex-auto float '>
       <div className=''>
         <LoggedInHeader curActiveScreen={"home"} setisAuthenticated={props.setisAuthenticated}>
-          <Slider/>
         </LoggedInHeader>
       </div>
     </div>

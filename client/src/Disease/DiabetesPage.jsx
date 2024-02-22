@@ -46,8 +46,8 @@ const DiabetesPage = () => {
 
   return (
     <LoggedInHeader>
-      <div className="diabetes-page flex items-center h-full">
-        <div className="bg-white p-5 ml-72 shadow-md rounded-md w-full max-w-md">
+      <div className='container w-4/5'>
+        <div className="bg-white p-5 mx-auto w-full max-w-screen-lg">
           <h2 className="text-3xl font-bold text-blue-800 mb-4 text-center">
             Diabetes Checker
           </h2>
@@ -81,8 +81,8 @@ const DiabetesPage = () => {
             </div>
           </form>
         </div>
-      </div>
       <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} disease = {'Diabetes'}/>
+      </div>
     </LoggedInHeader>
   );
 };

@@ -7,12 +7,13 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn import svm
+import joblib
 
 # path = "C:\Users\pritd\OneDrive\Desktop\Machine_Learning\DiseaseShield\predict\ml_models"
 
 def predict_heart_attack(input_data):
     # Load the CSV data into a Pandas DataFrame
-    heart_data = pd.read_csv('C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/heart_disease_data.csv')
+    heart_data = pd.read_csv('E:/sem6/SDP/DiseaseShield/predict/ml_models/heart_disease_data.csv')
 
     # Statistical measures about the data
     print("\nStatistical measures about the data:")
@@ -54,24 +55,25 @@ def predict_heart_attack(input_data):
 
 
 def predict_from_symptoms(syptoms):
-    data = pd.read_csv('C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/Training.csv')
+    # data = pd.read_csv('E:/sem6/SDP/DiseaseShield/predict/ml_models/Training.csv')
 
-    # Extract features (X) and target variable (y)
-    X = data.drop(['prognosis'], axis=1)  # Features
-    y = data['prognosis']  # Target variable
-
-
-    # Encode the target variable
-    le = LabelEncoder()
-    y = le.fit_transform(y)
+    # # Extract features (X) and target variable (y)
+    # X = data.drop(['prognosis'], axis=1)  # Features
+    # y = data['prognosis']  # Target variable
 
 
-    # Create a DecisionTreeClassifier model
-    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    # # Encode the target variable
+    # y = le.fit_transform(y)
 
 
-    # Train the model
-    model.fit(X, y)
+    # # Create a DecisionTreeClassifier model
+    # model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+
+    # # Train the model
+    # model.fit(X, y)
+
+    loaded_model = joblib.load('E:/sem6/SDP/DiseaseShield/predict/ml_models/symptoms_model.joblib')
 
 
     # Get user input for symptoms
@@ -79,16 +81,16 @@ def predict_from_symptoms(syptoms):
 
 
     # Create a DataFrame with all symptoms set to 0
-    user_data = pd.DataFrame(0, index=range(len(user_symptoms)), columns=X.columns)
+    user_data = pd.DataFrame(0, index=range(len(user_symptoms)), columns=loaded_model['X'].columns)
 
 
     # Set the values for the provided symptoms to 1
     user_data.loc[0, user_symptoms] = 1
 
-
     # Predict the disease based on user input
-    predicted_disease = le.inverse_transform(model.predict(user_data))
+    predicted_disease = loaded_model['le'].inverse_transform(loaded_model['model'].predict(user_data))
 
+    predicted_disease = list(set(predicted_disease))
 
     # Print the predicted disease
     print("Predicted Disease:", predicted_disease)
@@ -97,7 +99,7 @@ def predict_from_symptoms(syptoms):
 
 def predict_diabetes(input_data):
     #loading the diabets datasets to a pandas Dataframe
-    diabetes_dataset = pd.read_csv('C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/diabetes.csv')
+    diabetes_dataset = pd.read_csv('E:/sem6/SDP/DiseaseShield/predict/ml_models/diabetes.csv')
 
 
     #printing the first 5 rows of the datasets
@@ -155,10 +157,11 @@ def predict_diabetes(input_data):
     else:
         return 'The Person is diabetic'
 
+
 def predict_parkinson(input_data):
 
  # Load the data from CSV file into a Pandas DataFrame
-    parkinsons_data = pd.read_csv('C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/parkinsons.csv')
+    parkinsons_data = pd.read_csv('E:/sem6/SDP/DiseaseShield/predict/ml_models/parkinsons.csv')
 
     # Extract features and target variable
     X = parkinsons_data.drop(columns=['name', 'status'], axis=1)

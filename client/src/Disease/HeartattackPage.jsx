@@ -51,8 +51,8 @@ const HeartAttackPage = () => {
 
   return (
     <LoggedInHeader>
-      <div className="heart-attack-page flex items-center h-full">
-        <div className="bg-white p-5 ml-72 shadow-md rounded-md w-full max-w-md">
+      <div className='container w-4/5'>
+        <div className="bg-white p-5 mx-auto my-auto w-full h-full max-w-screen-lg">
           <h2 className="text-3xl font-bold text-red-800 mb-4 text-center">
             Heart Attack Checker
           </h2>
@@ -86,8 +86,8 @@ const HeartAttackPage = () => {
             </div>
           </form>
         </div>
-      </div>
       <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} disease = {'Heart Attack'}/>
+      </div>
     </LoggedInHeader>
   );
 };
