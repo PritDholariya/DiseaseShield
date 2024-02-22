@@ -47,7 +47,7 @@ const ParkinsonPage = () => {
         formData,
       });
       const prediction = response.data.prediction;
-      setPredictionResult(prediction === "The Person has Parkinson's Disease");
+      setPredictionResult(prediction === "The person has Parkinson's disease");
       setModalOpen(true);
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -111,28 +111,28 @@ export default ParkinsonPage;
 
 // const ParkinsonPage = () => {
 //   const [formData, setFormData] = useState({
-//     'MDVP:Fo(Hz)': '114.563',
-//     'MDVP:Fhi(Hz)': '119.167',
-//     'MDVP:Flo(Hz)': '86.647',
-//     'MDVP:Jitter(%)': '0.00327',
+//     'MDVP:Fo(Hz)': '148.143',
+//     'MDVP:Fhi(Hz)': '155.982',
+//     'MDVP:Flo(Hz)': '135.041',
+//     'MDVP:Jitter(%)': '0.00392',
 //     'MDVP:Jitter(Abs)': '0.00003',
-//     'MDVP:RAP': '0.00146',
-//     'MDVP:PPQ': '0.00184',
-//     'Jitter:DDP': '0.00439',
-//     'MDVP:Shimmer': '0.01185',
-//     'MDVP:Shimmer(dB)': '0.106',
-//     'Shimmer:APQ3': '0.00557',
-//     'Shimmer:APQ5': '0.00721',
-//     'MDVP:APQ': '0.01095',
-//     'Shimmer:DDA': '0.01672',
-//     'NHR': '0.00703',
-//     'HNR': '24.775',
-//     'RPDE': '0.555303',
-//     'DFA': '0.659132',
-//     'spread1': '-6.710219',
-//     'spread2': '0.149694',
-//     'D2': '1.91399',
-//     'PPE': '0.121777',
+//     'MDVP:RAP': '0.00204',
+//     'MDVP:PPQ': '0.00231',
+//     'Jitter:DDP': '0.00612',
+//     'MDVP:Shimmer': '0.0145',
+//     'MDVP:Shimmer(dB)': '0.131',
+//     'Shimmer:APQ3': '0.00725',
+//     'Shimmer:APQ5': '0.00876',
+//     'MDVP:APQ': '0.01263',
+//     'Shimmer:DDA': '0.02175',
+//     'NHR': '0.0054',
+//     'HNR': '23.683',
+//     'RPDE': '0.398499',
+//     'DFA': '0.778349',
+//     'spread1': '-5.711205',
+//     'spread2': '0.240875',
+//     'D2': '2.845109',
+//     'PPE': '0.19273'
 //   });
 
 //   const [modalOpen, setModalOpen] = useState(false);
@@ -153,7 +153,7 @@ export default ParkinsonPage;
 //         formData,
 //       });
 //       const prediction = response.data.prediction;
-//       setPredictionResult(prediction === "The Person has Parkinson's Disease");
+//       setPredictionResult(prediction === "The person has Parkinson's disease");
 //       setModalOpen(true);
 //     } catch (error) {
 //       console.error('Error fetching user data:', error);
