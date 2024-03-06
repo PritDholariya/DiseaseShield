@@ -70,7 +70,7 @@ export default function LoggedInHeader({ children, curActiveScreen, setisAuthent
             </Link>
           <div className="flex items-center px-6">
             <img
-              src={user?.profile_image || "https://example.com/user-profile.jpg"}
+              src={user?.profile_image || "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3Duser&psig=AOvVaw1TuGQk3B9MTUryyeIkkecc&ust=1708662981253000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCMC47N6PvoQDFQAAAAAdAAAAABAE"}
               alt="User Profile"
               className="h-8 w-8 rounded-full"
             />

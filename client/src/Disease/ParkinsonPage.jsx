@@ -60,15 +60,15 @@ const ParkinsonPage = () => {
 
   return (
     <LoggedInHeader>
-      <div className="parkinson-page flex items-center h-full">
-        <div className="bg-white ml-28 shadow-sm rounded-sm w-full px-4">
+      <div className='container w-4/5'>
+        <div className="bg-white mx-auto w-full p-5 max-w-screen-lg h-full">
           <h2 className="text-2xl font-bold text-green-800 mb-2 text-center p-2">
             Parkinson Disease Checker
           </h2>
           <p className="mb-2 text-center text-gray-600">
             Check if you might have symptoms of Parkinson's Disease! 🧠🔍
           </p>
-          <form onSubmit={handleFormSubmit} className="grid grid-cols-3 gap-4 mt-2">
+          <form onSubmit={handleFormSubmit} className="grid grid-cols-4 gap-4 mt-2">
             {Object.keys(formData).map((field) => (
               <div key={field} className="mb-2">
                 <label htmlFor={field} className="text-lg font-semibold text-green-800 block mb-1">
@@ -88,15 +88,15 @@ const ParkinsonPage = () => {
             <div className="col-span-4">
               <button
                 type="submit"
-                className="w-2/3 bg-green-500 pb-1 mb-1 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none transition duration-300 ease-in-out"
+                className="w-full bg-green-500 pb-1 mb-1 text-white py-2 px-auto rounded-md hover:bg-green-600 focus:outline-none transition duration-300 ease-in-out"
               >
                 Check Now
               </button>
             </div>
           </form>
         </div>
-      </div>
       <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} disease={'Parkinson Disease'} />
+      </div>
     </LoggedInHeader>
   );
 };
