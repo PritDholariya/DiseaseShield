@@ -3,79 +3,78 @@ import LoggedInHeader from '../components/LoggedInHeader';
 import axios from 'axios';
 import Slider from '../components/Slider';
 import Header from '../components/Header';
-// import 'dotenv/config'
-// import 'slick-carousel/slick/slick.css';
-// import 'slick-carousel/slick/slick-theme.css';
-// import { Slide } from 'react-toastify';
 
 const LoggedHome = (props) => {
-//   const [medicalImages, setMedicalImages] = useState([]);
-//   const [medicalArticles, setMedicalArticles] = useState([]);
-//   // const apiKeys = process.env.REACT_APP_NEWS_API_KEY;
+  // Dummy data about developers
+  const developer1Info = {
+    name: 'Prit Dholariya',
+    role: 'Co-Founder & Developer',
+    description: 'Experienced developer with a focus on backend systems and infrastructure. Enjoys building scalable and efficient solutions.',
+    phoneNumber: '+91 7016497046',
+    email: 'pritdholariya@gmail.com',
+  };
 
-//   useEffect(() => {
-//     axios
-//       .get('https://api.unsplash.com/photos/random', {
-//         params: {
-//           query: 'medical',
-//           count: 5,
-//           client_id: 'YOUR_UNSPLASH_API_KEY',
-//         },
-//       })
-//       .then((response) => {
-//         setMedicalImages(response.data);
-//       })
-//       .catch((error) => {
-//         console.error('Error fetching medical images:', error);
-//       });
+  const developer2Info = {
+    name: 'Om Chikhaliya',
+    role: 'Co-Founder & Developer',
+    description: 'Passionate about creating meaningful applications that solve real-world problems. Expertise in frontend development and UI/UX design.',
+    phoneNumber: '+91 9875053749',
+    email: 'omchikhaliya@gmail.com',
+  };
 
+  // Define background gradient style with lighter colors
+  const cardStyle = {
+    background: 'linear-gradient(135deg, #fff0e6, #ffe6cc)', // Lighter skin color gradient
+  };
 
-//     axios
-//       .get('https://newsapi.org/v2/top-headlines', {
-//         params: {
-//           country: 'us',
-//           category: 'health',
-//           apiKey: 'c4dc33607f7c44e1bc11189450c91b43',
-//         },
-//       })
-//       .then((response) => {
-//         setMedicalArticles(response.data.articles);
-//       })
-//       .catch((error) => {
-//         console.error('Error fetching medical articles:', error);
-//       });
-//   }, []);
+  // Actual disease data
+  const diseaseData = [
+    {
+      name: 'COVID-19 Pandemic',
+      description: 'The COVID-19 pandemic, caused by the novel coronavirus SARS-CoV-2, has significantly impacted the world. As of now, there have been over 400 million confirmed cases globally, with more than 5.8 million deaths reported. Vaccination efforts continue to play a crucial role in controlling the spread of the virus.',
+    },
+    {
+      name: 'Malaria',
+      description: 'Malaria remains a major health concern, particularly in tropical and subtropical regions. Approximately 229 million cases of malaria occur annually, leading to around 409,000 deaths. Prevention measures such as insecticide-treated bed nets and antimalarial medications are essential.',
+    },
 
-//   const renderImageCarouselItems = () => {
-//     return medicalImages.map((image) => (
-//       <div key={image.id} className="carousel-item">
-//         <img src={image.urls.regular} alt={image.alt_description} className="w-full h-auto" />
-//       </div>
-//     ));
-//   };
-
-//   const renderArticleList = () => {
-//     return medicalArticles.map((article, index) => (
-//       <div key={index} className="mb-6">
-//         <h3 className="text-xl font-bold mb-2">{article.title}</h3>
-//         <p>{article.description}</p>
-//       </div>
-//     ));
-//   };
-
-//   const carouselSettings = {
-//     dots: true,
-//     infinite: true,
-//     speed: 500,
-//     slidesToShow: 1,
-//     slidesToScroll: 1,
-//   };
+  ];
 
   return (
     <div className='flex-auto float '>
       <div className=''>
         <LoggedInHeader curActiveScreen={"home"} setisAuthenticated={props.setisAuthenticated}>
-          <Slider/>
+          <div className="container mx-auto mt-10">
+            <h2 className="text-3xl font-semibold text-gray-800 mb-4">Welcome to DiseaseShield</h2>
+            <p className="text-lg text-gray-600 mb-6">Get insights about various diseases and their predictions based on data science and machine learning.</p>
+            <div className="grid grid-cols-2 gap-8 m-2">
+              <div className="p-6 rounded-lg shadow-md " style={cardStyle}>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">{developer1Info.name}</h3>
+                <p className="text-gray-600">{developer1Info.role}</p>
+                <p className="text-gray-700 mt-4">{developer1Info.description}</p>
+                <p className="text-gray-700 mt-4">Phone Number: {developer1Info.phoneNumber}</p>
+                <p className="text-gray-700 mt-4">Email: {developer1Info.email}</p>
+              </div>
+              <div className="p-6 rounded-lg shadow-md" style={cardStyle}>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">{developer2Info.name}</h3>
+                <p className="text-gray-600">{developer2Info.role}</p>
+                <p className="text-gray-700 mt-4">{developer2Info.description}</p>
+                <p className="text-gray-700 mt-4">Phone Number: {developer2Info.phoneNumber}</p>
+                <p className="text-gray-700 mt-4">Email: {developer2Info.email}</p>
+              </div>
+            </div>
+            <div className="mt-8">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Global Disease Data</h3>
+              <ul className="list-disc list-inside text-gray-700 mt-4">
+                {diseaseData.map((disease, index) => (
+                  <li key={index}>
+                    <h4 className="font-semibold">{disease.name}</h4>
+                    <p>{disease.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </LoggedInHeader>
       </div>
     </div>
