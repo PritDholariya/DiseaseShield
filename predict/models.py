@@ -14,3 +14,16 @@ class UserDetails(models.Model):
 
     def __str__(self):
         return self.username
+
+class UserHistory(models.Model):
+    # user = models.ForeignKey(UserDetails, on_delete=models.CASCADE)
+    user = models.CharField(max_length =255)
+    prediction_type = models.CharField(max_length=200,blank=True, null=True)
+    symptoms = models.CharField(max_length=255, blank=True, null=True)
+    disease = models.CharField(max_length=100, blank=True, null=True)
+    prediction_result = models.CharField(max_length=100, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user
+    

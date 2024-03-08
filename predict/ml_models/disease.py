@@ -8,7 +8,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn import svm
 import joblib
-import pickle
+# import pickle
 import os
 import joblib
 
@@ -122,7 +122,7 @@ def predict_from_symptoms(syptoms):
     # # Train the model
     # model.fit(X, y)
 
-    loaded_model = joblib.load('E:/sem6/SDP/DiseaseShield/predict/ml_models/symptoms_model.joblib')
+    loaded_model = joblib.load('C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/symptoms_model.joblib')
 
 
     # Get user input for symptoms
@@ -202,6 +202,7 @@ def predict_diabetes(input_data):
         return 'The Person is not diabetic'
     else:
         return 'The Person is diabetic'
+    
 # def predict_diabetes(input_data):
     #loading the diabets datasets to a pandas Dataframe
     diabetes_dataset = pd.read_csv('E:/sem6/SDP/DiseaseShield/predict/ml_models/diabetes.csv')

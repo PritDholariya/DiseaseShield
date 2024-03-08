@@ -21,7 +21,7 @@ export default function LoggedInHeader({ children, curActiveScreen, setisAuthent
   const handleLogout = async (e) => {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
-    setisAuthenticated(null)
+    setisAuthenticated(null);
     navigate("/")
   };
 
@@ -84,10 +84,10 @@ export default function LoggedInHeader({ children, curActiveScreen, setisAuthent
               active={curActiveScreen === "home"}
 
             />
-            <IconText
+            {/* <IconText
               iconName={"material-symbols:search-rounded"}
               displayText={"Search"}
-            />
+            /> */}
             <IconText
               iconName={"icomoon-free:books"}
               displayText={"History   "}

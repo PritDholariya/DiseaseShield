@@ -41,7 +41,10 @@ const SymptomsPage = () => {
     'blackheads', 'scurring', 'skin_peeling', 'silver_like_dusting', 'small_dents_in_nails',
     'inflammatory_nails', 'blister', 'red_sore_around_nose', 'yellow_crust_ooze', 'prognosis'
   ];
-
+  const [currentuser, setCurrentuser] = useState();
+  useEffect(() => {
+    setCurrentuser(JSON.parse(localStorage.getItem('user')))
+  }, []);
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
@@ -89,6 +92,7 @@ const SymptomsPage = () => {
     try {
       const response = await axios.post("http://localhost:8000/api/disease/symptoms", {
         'symptoms': symptoms,
+        curruser : currentuser
       });
       const prediction = response.data.prediction;
       setTestResult(prediction)

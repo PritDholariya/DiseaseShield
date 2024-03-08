@@ -1,5 +1,5 @@
 import LoggedInHeader from "../components/LoggedInHeader";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import CustomModal from "../components/Modal"; // Import your CustomModal component
 
@@ -17,6 +17,10 @@ const DiabetesPage = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [predictionResult, setPredictionResult] = useState(false);
+  const [currentuser, setCurrentuser] = useState();
+  useEffect(() => {
+    setCurrentuser(JSON.parse(localStorage.getItem('user')))
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,6 +35,7 @@ const DiabetesPage = () => {
     try {
       const response = await axios.post("http://localhost:8000/api/disease/diabetes", {
         formData,
+        curruser : currentuser
       });
       const prediction = response.data.prediction;
       setPredictionResult(prediction === "The Person is diabetic");

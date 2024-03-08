@@ -10,4 +10,5 @@ urlpatterns = [
     path('disease/diabetes',views.diabetes, name = "diabetes"),
     path('disease/symptoms',views.predict_disease, name = "symptoms"),
     path('disease/parkinson',views.parkinson,name="parkinson"),
+    path('history',views.diseasehistory, name = "disease_history"),
 ]

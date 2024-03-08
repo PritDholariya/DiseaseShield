@@ -12,6 +12,7 @@
   import SymtomsPage from './Disease/SymtomsPage';
   import HistoryPage from './pages/HistoryPage';
   import { useEffect, useState } from 'react';
+import YourComponent from './pages/YourComponent';
 
   // const isAuthenticated = localStorage.getItem('token') !== null;
 

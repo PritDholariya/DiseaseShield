@@ -1,71 +1,79 @@
 import React, { useState, useEffect } from 'react';
 import LoggedInHeader from '../components/LoggedInHeader';
+import axios from 'axios';
 
 const HistoryPage = () => {
-  const [history, setHistory] = useState([
-    { id: 1, disease: 'Diabetes', date: '2022-03-01' },
-    { id: 2, disease: 'Heart Attack', date: '2022-03-05' },
-    // Add more history items as needed
-  ]);
+  const [historyData, setHistoryData] = useState([]);
+  const [currentuser, setCurrentuser] = useState();
 
-  const [futureDisease, setFutureDisease] = useState('');
+  useEffect(() => {
+    // Fetch current user from localStorage when the component mounts
+    const userFromLocalStorage = JSON.parse(localStorage.getItem('user'));
+    setCurrentuser(userFromLocalStorage);
+  }, []);
 
-  const clearHistory = () => {
-    setHistory([]);
-  };
+  useEffect(() => {
+    // Fetch history data from the backend when the current user is set
+    if (currentuser) {
+      fetchHistoryData();
+    }
+  }, [currentuser]);
 
-  const addFutureDisease = () => {
-    if (futureDisease.trim() !== '') {
-      const newHistoryItem = {
-        id: Date.now(),
-        disease: futureDisease,
-        date: new Date().toLocaleDateString(),
-      };
-      setHistory((prevHistory) => [...prevHistory, newHistoryItem]);
-      setFutureDisease('');
+  const fetchHistoryData = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/api/history', {
+        curruser: currentuser
+      });
+  
+      // Check if response.data is empty or null
+      if (!response.data || response.data.length === 0) {
+        console.error('Error fetching history data: Response data is empty');
+        return;
+      }
+  
+      // Update frontend parsing logic to handle list of dictionaries
+      setHistoryData(response.data.history_data);
+    } catch (error) {
+      console.error('Error fetching history data:', error);
     }
   };
 
   return (
-    <LoggedInHeader curActiveScreen={"history"}>
-      <div className="history-page w-4/5 flex ml-72 items-center h-full ">
-        <div className="bg-green-100 p-8 shadow-md rounded-md w-full max-w-2xl">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">Disease History</h2>
-          {history.length > 0 ? (
-            <ul className="list-disc pl-6 mb-6">
-              {history.map((item) => (
-                <li key={item.id} className="text-lg font-semibold">
-                  {item.disease} - Checked on {item.date}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-center text-gray-600">No disease history available.</p>
-          )}
-
-          {/* Input for future diseases */}
-          <div className="flex items-center mb-4">
-            <input
-              type="text"
-              placeholder="Enter future disease..."
-              value={futureDisease}
-              onChange={(e) => setFutureDisease(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 transition duration-300 ease-in-out hover:border-blue-600"
-            />
-            <button
-              onClick={addFutureDisease}
-              className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none transition duration-300 ease-in-out"
-            >
-              Add
-            </button>
+    <LoggedInHeader curActiveScreen="history">
+      <div className="container mx-auto mt-14">
+        <h2 className="text-3xl font-semibold text-gray-800 mb-4">History</h2>
+        <div className="overflow-x-auto mt-20">
+          <div className="max-h-96 overflow-y-auto">
+            <table className="min-w-full border-collapse border border-gray-200">
+              <thead>
+                <tr>
+                  <th className="border border-gray-200 px-4 py-2">User</th>
+                  <th className="border border-gray-200 px-4 py-2">Prediction Type</th>
+                  <th className="border border-gray-200 px-4 py-2">Symptoms</th>
+                  <th className="border border-gray-200 px-4 py-2">Disease</th>
+                  <th className="border border-gray-200 px-4 py-2">Prediction Result</th>
+                  <th className="border border-gray-200 px-4 py-2">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+                {historyData && historyData.map((item, index) => (
+                  <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
+                    <td className="border border-gray-200 px-4 py-2">{item?.user}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.prediction_type}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.symptoms}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.disease}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.prediction_result}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.timestamp}</td>
+                  </tr>
+                ))}
+                {!historyData && (
+                  <tr>
+                    <td colSpan="6" className="text-center">No history data available</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
-
-          <button
-            onClick={clearHistory}
-            className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none transition duration-300 ease-in-out"
-          >
-            Clear History
-          </button>
         </div>
       </div>
     </LoggedInHeader>

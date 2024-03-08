@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 
 
 const SignUpPage = () => {
@@ -11,6 +11,7 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [dob, setDob] = useState('');
   const [profileimage, setProfileimage] = useState('');
+  const navigate = useNavigate();
 
   const handleImageChange = async (e) => {
     var reader = new FileReader();
@@ -26,6 +27,8 @@ const SignUpPage = () => {
         username, password, firstname, lastname, email, dob, profileimage
       });
       console.log(response.data);
+      navigate('/login'); 
+
       // Handle successful signup, e.g., redirect to login page
     } catch (error) {
       console.error('Signup failed:', error.response.data);
@@ -145,7 +148,7 @@ const SignUpPage = () => {
                 <input type="date"  value={dob} onChange={(e) => setDob(e.target.value)}  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Profile Pic</label>
                 <input type="file" onChange={handleImageChange} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
               </div>
               

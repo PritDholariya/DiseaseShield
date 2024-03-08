@@ -22,6 +22,11 @@ const HeartAttackPage = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [predictionResult, setPredictionResult] = useState(false);
+  const [currentuser, setCurrentuser] = useState();
+  useEffect(() => {
+    setCurrentuser(JSON.parse(localStorage.getItem('user')))
+  }, []);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +40,8 @@ const HeartAttackPage = () => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:8000/api/disease/heart_attack", {
-        formData,
+        formData, 
+        curruser : currentuser,
       });
       const prediction = response.data.prediction;
       setPredictionResult(prediction === "The Person has Heart Disease");
