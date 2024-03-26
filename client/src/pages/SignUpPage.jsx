@@ -37,81 +37,7 @@ const SignUpPage = () => {
   };
 
   return (
-    // <div className="max-w-md mx-auto mt-8 p-4 bg-white rounded shadow-md">
-    //   <h2 className="text-2xl font-semibold mb-4">Signup</h2>
-    //   <form>
-    //     <div className="mb-4">
-    //       <label className="block text-sm font-medium text-gray-600">Username:</label>
-    //       <input
-    //         type="text"
-    //         className="mt-1 p-2 border rounded w-full focus:outline-none focus:ring focus:border-blue-300"
-    //         value={username}
-    //         onChange={(e) => setUsername(e.target.value)}
-    //       />
-    //     </div>
-    //     <div className="mb-4">
-    //       <label className="block text-sm font-medium text-gray-600">Password:</label>
-    //       <input
-    //         type="password"
-    //         className="mt-1 p-2 border rounded w-full focus:outline-none focus:ring focus:border-blue-300"
-    //         value={password}
-    //         onChange={(e) => setPassword(e.target.value)}
-    //       />
-    //     </div>
-    //     <div className="mb-4">
-    //       <label className="block text-sm font-medium text-gray-600">Firstname:</label>
-    //       <input
-    //         type="text"
-    //         className="mt-1 p-2 border rounded w-full focus:outline-none focus:ring focus:border-blue-300"
-    //         value={firstname}
-    //         onChange={(e) => setFirstname(e.target.value)}
-    //       />
-    //     </div>
-    //     <div className="mb-4">
-    //       <label className="block text-sm font-medium text-gray-600">Lastname:</label>
-    //       <input
-    //         type="text"
-    //         className="mt-1 p-2 border rounded w-full focus:outline-none focus:ring focus:border-blue-300"
-    //         value={lastname}
-    //         onChange={(e) => setLastname(e.target.value)}
-    //       />
-    //     </div>
-    //     <div className="mb-4">
-    //       <label className="block text-sm font-medium text-gray-600">Email:</label>
-    //       <input
-    //         type="email"
-    //         className="mt-1 p-2 border rounded w-full focus:outline-none focus:ring focus:border-blue-300"
-    //         value={email}
-    //         onChange={(e) => setEmail(e.target.value)}
-    //       />
-    //     </div>
-    //     <div className="mb-4">
-    //       <label className="block text-sm font-medium text-gray-600">DOB:</label>
-    //       <input
-    //         type="date"
-    //         className="mt-1 p-2 border rounded w-full focus:outline-none focus:ring focus:border-blue-300"
-    //         value={dob}
-    //         onChange={(e) => setDob(e.target.value)}
-    //       />
-    //     </div>
-    //     <div className="mb-4">
-    //       <label className="block text-sm font-medium text-gray-600">Thumbnail:</label>
-    //       <input
-    //         type="file"
-    //         className="mt-1 p-2 border rounded w-full focus:outline-none focus:ring focus:border-blue-300"
-    //         onChange={handleImageChange}
-    //       />
-    //     </div>
-    //     <button
-    //       type="button"
-    //       className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring focus:border-blue-300"
-    //       onClick={handleSignup}
-    //     >
-    //       Signup
-    //     </button>
-    //   </form>
-    // </div>
-    <section className="bg-transparent">
+    <section className="bg-transparent bg-gradient-to-r from-cyan-500 to-blue-500">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
         <Link to="/" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
         <span className="material-symbols-outlined mr-2">cardiology</span>
@@ -165,8 +91,3 @@ const SignUpPage = () => {
 }
 
 export default SignUpPage
-
-// value={username}
-//         onChange={(e) => setUsername(e.target.value)}
-
-//         onChange={handleImageChange}

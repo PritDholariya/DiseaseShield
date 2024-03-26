@@ -58,12 +58,12 @@ const HistoryPage = () => {
               <tbody>
                 {historyData && historyData.map((item, index) => (
                   <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
-                    <td className="border border-gray-200 px-4 py-2">{item?.user}</td>
-                    <td className="border border-gray-200 px-4 py-2">{item?.prediction_type}</td>
-                    <td className="border border-gray-200 px-4 py-2">{item?.symptoms}</td>
-                    <td className="border border-gray-200 px-4 py-2">{item?.disease}</td>
-                    <td className="border border-gray-200 px-4 py-2">{item?.prediction_result}</td>
-                    <td className="border border-gray-200 px-4 py-2">{item?.timestamp}</td>
+  <td className="border border-gray-200 px-4 py-2">{item?.user || '-'}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.prediction_type || '-'}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.symptoms || '-'}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.disease || '-'}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.prediction_result || '-'}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.timestamp || '-'}</td>
                   </tr>
                 ))}
                 {!historyData && (

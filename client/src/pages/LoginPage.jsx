@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './../App.jsx'
+import {MDBContainer, MDBCol, MDBRow, MDBBtn, MDBIcon, MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
 
 const LoginPage = (props) => {
   const [username, setUsername] = useState('');
@@ -34,6 +35,7 @@ const LoginPage = (props) => {
     }
   };
   return (
+    <div className='bg-gradient-to-r from-cyan-500 to-blue-500'>
     <section className="bg-transparent">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto">
         <Link to="/" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
@@ -74,6 +76,7 @@ const LoginPage = (props) => {
         </div>
       </div>
     </section>
+    </div>
   );
 };
 

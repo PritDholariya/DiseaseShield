@@ -31,11 +31,12 @@ def load_or_train_model_heart():
     Y = heart_data['target']
 
     # Splitting the Data into Training data & Test Data
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, stratify=Y, random_state=2)
+    # X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, stratify=Y, random_state=2)
 
     # Model Training - Logistic Regression
-    model = LogisticRegression(max_iter=1000)
-    model.fit(X_train, Y_train)
+    # model = LogisticRegression(max_iter=1000)
+    model = svm.SVC(kernel = 'linear')
+    model.fit(X, Y)
 
     # Save the model
     print("Saving the trained model...")
