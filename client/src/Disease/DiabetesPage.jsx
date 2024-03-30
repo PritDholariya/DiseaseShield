@@ -18,6 +18,7 @@ const DiabetesPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [predictionResult, setPredictionResult] = useState(false);
   const [currentuser, setCurrentuser] = useState();
+  const [prob , setProb]= useState();
   useEffect(() => {
     setCurrentuser(JSON.parse(localStorage.getItem('user')))
   }, []);
@@ -38,6 +39,7 @@ const DiabetesPage = () => {
         curruser : currentuser
       });
       const prediction = response.data.prediction;
+      setProb(response.data.probabilities);
       setPredictionResult(prediction === "The Person is diabetic");
       setModalOpen(true);
     } catch (error) {
@@ -86,7 +88,7 @@ const DiabetesPage = () => {
             </div>
           </form>
         </div>
-      <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} disease = {'Diabetes'}/>
+      <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} disease = {'Diabetes'} prob = {prob}/>
       </div>
     </LoggedInHeader>
   );

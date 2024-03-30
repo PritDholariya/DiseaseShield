@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.calibration import CalibratedClassifierCV
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
@@ -15,11 +16,14 @@ import joblib
 # path = "C:\Users\pritd\OneDrive\Desktop\Machine_Learning\DiseaseShield\predict\ml_models"
 def load_or_train_model_heart():
     model_file = 'C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/heart_disease_model.joblib'
-    
+    scaler_file = 'C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/diabetes_scaler.joblib'
+
     # If model file exists, load and return the model
-    if os.path.exists(model_file):
-        print("Loading pre-trained model...")
-        return joblib.load(model_file)
+    if os.path.exists(model_file) and os.path.exists(scaler_file):
+        print("Loading pre-trained diabetes model and scaler...")
+        model = joblib.load(model_file)
+        scaler = joblib.load(scaler_file)
+        return model, scaler
     
     # If model file doesn't exist, perform training and testing
     print("Training the model...")
@@ -30,36 +34,46 @@ def load_or_train_model_heart():
     X = heart_data.drop(columns='target', axis=1)
     Y = heart_data['target']
 
+    scaler = StandardScaler()
+    scaler.fit(X)
+    standardize_data = scaler.transform(X)
+    X = standardize_data
+    Y = heart_data['target']
     # Splitting the Data into Training data & Test Data
     # X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, stratify=Y, random_state=2)
 
     # Model Training - Logistic Regression
     # model = LogisticRegression(max_iter=1000)
-    model = svm.SVC(kernel = 'linear')
-    model.fit(X, Y)
+    classifier = svm.SVC(kernel='linear' , probability=True)
+    calibrated_classifier = CalibratedClassifierCV(classifier)
+    calibrated_classifier.fit(X, Y)
 
     # Save the model
     print("Saving the trained model...")
-    joblib.dump(model, model_file)
-    
-    return model
+    joblib.dump(calibrated_classifier, model_file)
+    joblib.dump(scaler, scaler_file)
+
+    return calibrated_classifier, scaler
 
 
 def predict_heart_attack(input_data):
     # Load or train the model
-    model = load_or_train_model_heart()
+    model, scaler= load_or_train_model_heart()
 
     # Building a Predictive System
     input_data_values = [float(input_data[key]) for key in input_data]
     input_data_reshaped = np.array(input_data_values).reshape(1, -1)
+    std_data = scaler.transform(input_data_reshaped)
 
-    prediction = model.predict(input_data_reshaped)
+    prediction = model.predict(std_data)
+    probability = model.predict_proba(std_data)
+
     print('\nPrediction:', prediction)
-
+    print(probability)
     if prediction[0] == 0:
-        return 'The Person does not have a Heart Disease'
+        return 'The Person does not have a Heart Disease', probability[0][0]
     else:
-        return 'The Person has Heart Disease'
+        return 'The Person has Heart Disease', probability[0][1]
 
 # def predict_heart_attack(input_data):
 #     # Load the CSV data into a Pandas DataFrame
@@ -174,15 +188,15 @@ def load_or_train_diabetes_model():
 
     X = standardize_data
     Y = diabetes_dataset['Outcome']
-    classifier = svm.SVC(kernel='linear')
-    classifier.fit(X, Y)
-
+    classifier = svm.SVC(kernel='linear' , probability=True)
+    calibrated_classifier = CalibratedClassifierCV(classifier)
+    calibrated_classifier.fit(X, Y)
     # Save the trained model and scaler
     print("Saving the trained diabetes model and scaler...")
-    joblib.dump(classifier, model_file)
+    joblib.dump(calibrated_classifier, model_file)
     joblib.dump(scaler, scaler_file)
     
-    return classifier, scaler
+    return calibrated_classifier, scaler
 
 
 def predict_diabetes(input_data):
@@ -198,12 +212,14 @@ def predict_diabetes(input_data):
 
     # Make predictions
     prediction = model.predict(std_data)
+    probability = model.predict_proba(std_data)
+    print(probability)
     print(prediction[0])
-    if (prediction[0] == 0):
-        return 'The Person is not diabetic'
+
+    if prediction[0] == 0:
+        return 'The Person is not diabetic', probability[0][0]  # Probability of not being diabetic
     else:
-        return 'The Person is diabetic'
-    
+        return 'The Person is diabetic', probability[0][1]  # Probability of being diabetic
 # def predict_diabetes(input_data):
     #loading the diabets datasets to a pandas Dataframe
     diabetes_dataset = pd.read_csv('E:/sem6/SDP/DiseaseShield/predict/ml_models/diabetes.csv')
@@ -339,18 +355,18 @@ def load_or_train_model_parkinson():
     scaler.fit(X)
     X_scaled = scaler.transform(X)
 
-    # Initialize the SVM model
-    model = svm.SVC(kernel='linear')
-
+    classifier = svm.SVC(kernel='linear' , probability=True)
+    calibrated_classifier = CalibratedClassifierCV(classifier)
+    calibrated_classifier.fit(X_scaled, Y)
     # Train the SVM model
-    model.fit(X_scaled, Y)
+    # model.fit(X_scaled, Y)
 
     # Save the model and scaler
     print("Saving the trained model and scaler for Parkinson's disease prediction...")
-    joblib.dump(model, model_file)
+    joblib.dump(calibrated_classifier, model_file)
     joblib.dump(scaler, scaler_file)
     
-    return model, scaler
+    return calibrated_classifier, scaler
 
 def predict_parkinson(input_data):
     # Load or train the model and scaler
@@ -358,11 +374,13 @@ def predict_parkinson(input_data):
 
     # Standardize the input data using the loaded scaler
     input_data_scaled = scaler.transform([input_data])
-    
+
     # Make prediction on input data
     prediction = model.predict(input_data_scaled)
+    probability = model.predict_proba(input_data_scaled)
+
     print(prediction[0])
     if (prediction[0] == 0):
-        return "The person does not have Parkinson's disease"
+        return "The person does not have Parkinson's disease",probability[0][0]
     else:
-        return "The person has Parkinson's disease"
+        return "The person has Parkinson's disease",probability[0][1]

@@ -24,7 +24,6 @@ const HistoryPage = () => {
       const response = await axios.post('http://localhost:8000/api/history', {
         curruser: currentuser
       });
-  
       // Check if response.data is empty or null
       if (!response.data || response.data.length === 0) {
         console.error('Error fetching history data: Response data is empty');
@@ -37,10 +36,14 @@ const HistoryPage = () => {
       console.error('Error fetching history data:', error);
     }
   };
-
+  // Function to format timestamp
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString(); // Use the appropriate options for your locale
+  };
   return (
     <LoggedInHeader curActiveScreen="history">
-      <div className="container mx-auto mt-14">
+      <div className="container mx-auto ml-2 mt-14">
         <h2 className="text-3xl font-semibold text-gray-800 mb-4">History</h2>
         <div className="overflow-x-auto mt-20">
           <div className="max-h-96 overflow-y-auto">
@@ -52,23 +55,25 @@ const HistoryPage = () => {
                   <th className="border border-gray-200 px-4 py-2">Symptoms</th>
                   <th className="border border-gray-200 px-4 py-2">Disease</th>
                   <th className="border border-gray-200 px-4 py-2">Prediction Result</th>
+                  <th className="border border-gray-200 px-4 py-2">Disease Probability</th>
                   <th className="border border-gray-200 px-4 py-2">Timestamp</th>
                 </tr>
               </thead>
               <tbody>
                 {historyData && historyData.map((item, index) => (
                   <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
-  <td className="border border-gray-200 px-4 py-2">{item?.user || '-'}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.user || '-'}</td>
                     <td className="border border-gray-200 px-4 py-2">{item?.prediction_type || '-'}</td>
                     <td className="border border-gray-200 px-4 py-2">{item?.symptoms || '-'}</td>
                     <td className="border border-gray-200 px-4 py-2">{item?.disease || '-'}</td>
                     <td className="border border-gray-200 px-4 py-2">{item?.prediction_result || '-'}</td>
-                    <td className="border border-gray-200 px-4 py-2">{item?.timestamp || '-'}</td>
+                    <td className="border border-gray-200 px-4 py-2">{item?.prediction_percentage ? `${(item.prediction_percentage * 100).toFixed(2)}%` : '-'}</td>
+                    <td className="border border-gray-200 px-4 py-2">{formatTimestamp(item?.timestamp) || '-'}</td>
                   </tr>
                 ))}
                 {!historyData && (
                   <tr>
-                    <td colSpan="6" className="text-center">No history data available</td>
+                    <td colSpan="7" className="text-center">No history data available</td>
                   </tr>
                 )}
               </tbody>
@@ -78,6 +83,7 @@ const HistoryPage = () => {
       </div>
     </LoggedInHeader>
   );
+  
 };
 
 export default HistoryPage;

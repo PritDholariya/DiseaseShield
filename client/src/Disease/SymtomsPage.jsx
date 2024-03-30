@@ -109,8 +109,10 @@ const SymptomsPage = () => {
           <div className="p-8 w-full">
             <h2 className="text-3xl font-bold text-blue-800 mb-4 text-center">Symptoms Tracker</h2>
             {/* Your existing content */}
-            <p className="mb-4 text-center text-gray-600">Track and manage your symptoms! 🩹📋</p>
+            <p className="mb-2 text-center text-gray-600">Track and manage your symptoms! 🩹📋</p>
             <h2 className='font-bold text-gray-600 drop-shadow-md	'>Model Used : Random Forest</h2>
+            <h2 className='font-bold text-gray-600 drop-shadow-md	'>Model Accuracy : 88.79%</h2>
+
             {/* Input for new symptom */}
             <div className="mb-4 flex items-center">
               {/* <input
