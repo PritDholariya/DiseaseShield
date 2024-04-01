@@ -10,14 +10,14 @@ const modalStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    maxWidth: "300px", // Adjust the width as needed
+    maxWidth: "400px", // Adjust the width as needed
   },
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.7)", // Add a semi-transparent black overlay for a blurred effect
   },
 };
 
-const CustomModal = ({ isOpen, onRequestClose, predictionResult , disease}) => {
+const CustomModal = ({ isOpen, onRequestClose, predictionResult , disease , prob}) => {
   useEffect(() => {
     // Set the app element to the root of your app (where Modal is being used)
     Modal.setAppElement("#root");
@@ -34,8 +34,14 @@ const CustomModal = ({ isOpen, onRequestClose, predictionResult , disease}) => {
       <div className="text-center p-4">
         <h2 className="text-2xl font-bold text-red-800 mb-2">Prediction Result</h2>
         <p className={`text-${predictionResult ? "amber-900" : "green"} mb-4`}>
-          {predictionResult ? `You may have ${disease}` : `You does not have ${disease}`}
+          {predictionResult ? `The person has ${disease} ` : `The person does not have ${disease}`}
+          <br></br>
+          {`With `}
+          <span style={{ color: 'red' }}>{(prob * 100).toFixed(2)}%</span>
+          {` Probability`}
+
         </p>
+
         <button
           onClick={onRequestClose}
           className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none transition duration-300 ease-in-out"

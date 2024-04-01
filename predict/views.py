@@ -111,7 +111,7 @@ def heart_attack(request):
         data = request.data.get("formData")
         current = request.data.get("curruser")
         input_data = {key: float(value) for key, value in data.items()}
-        prediction = predict_heart_attack(input_data)
+        prediction , probabilities = predict_heart_attack(input_data)
         print("back")
         print(prediction)
         # Create a new UserHistory object
@@ -119,10 +119,11 @@ def heart_attack(request):
             user=current.get("username"),
             prediction_type = "Disease",
             disease = "Heart Attack",
-            prediction_result = prediction
+            prediction_result = prediction,
+            prediction_percentage = probabilities
         )
         # Return the prediction as a JSON response
-        return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction}, status=status.HTTP_200_OK)
+        return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction ,'probabilities': probabilities}, status=status.HTTP_200_OK)
 
     return Response({"status": "error", 'message': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -158,15 +159,18 @@ def diabetes(request):
         data = request.data.get("formData")
         current = request.data.get("curruser")
         input_data = [float(value) for value in data.values()]  # Convert dictionary values to list of floats
-        prediction = predict_diabetes(input_data)  # Assuming predict_diabetes is your prediction function
+        prediction, probabilities = predict_diabetes(input_data)  # Assuming predict_diabetes is your prediction function
         history_entry = UserHistory.objects.create(
             user=current.get("username"),
             prediction_type = "Disease",
             disease = "Diabetes",
-            prediction_result = prediction
+            prediction_result = prediction,
+            prediction_percentage = probabilities
         )
         # Return the prediction as a JSON response
-        return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction}, status=status.HTTP_200_OK)
+        return Response({
+            "status": "success", 'message': 'Prediction successful', 'prediction': prediction,'probabilities': probabilities
+            }, status=status.HTTP_200_OK)
 
     return Response({"status": "error", 'message': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -178,15 +182,17 @@ def parkinson(request):
         data = request.data.get("formData")
         current = request.data.get("curruser")
         input_data = [float(value) for value in data.values()]  # Convert dictionary values to list of floats
-        prediction = predict_parkinson(input_data)  # Assuming predict_parkinson is your prediction function
+        prediction , probabilities= predict_parkinson(input_data)  # Assuming predict_parkinson is your prediction function
         history_entry = UserHistory.objects.create(
             user=current.get("username"),
             prediction_type = "Disease",
             disease = "Parkinson",
-            prediction_result = prediction
+            prediction_result = prediction,
+            prediction_percentage = probabilities
+
         )
         # Return the prediction as a JSON response
-        return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction}, status=status.HTTP_200_OK)
+        return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction ,"probabilities" : probabilities}, status=status.HTTP_200_OK)
 
     return Response({"status": "error", 'message': 'Invalid request method'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -209,6 +215,7 @@ def diseasehistory(request):
                 'symptoms': entry.symptoms,
                 'disease': entry.disease,
                 'prediction_result': entry.prediction_result,
+                'prediction_percentage': entry.prediction_percentage,
                 'timestamp': entry.timestamp
             })
         print(type(history_data[0]))

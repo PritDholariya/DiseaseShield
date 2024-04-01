@@ -23,6 +23,7 @@ const HeartAttackPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [predictionResult, setPredictionResult] = useState(false);
   const [currentuser, setCurrentuser] = useState();
+  const [prob , setProb] = useState();
   useEffect(() => {
     setCurrentuser(JSON.parse(localStorage.getItem('user')))
   }, []);
@@ -44,6 +45,7 @@ const HeartAttackPage = () => {
         curruser : currentuser,
       });
       const prediction = response.data.prediction;
+      setProb(response.data.probabilities);
       setPredictionResult(prediction === "The Person has Heart Disease");
       setModalOpen(true);
     } catch (error) {
@@ -92,7 +94,7 @@ const HeartAttackPage = () => {
             </div>
           </form>
         </div>
-      <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} disease = {'Heart Attack'}/>
+      <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} disease = {'Heart Attack'} prob = {prob}/>
       </div>
     </LoggedInHeader>
   );

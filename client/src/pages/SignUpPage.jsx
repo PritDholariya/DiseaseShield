@@ -163,8 +163,3 @@ const SignUpPage = () => {
 }
 
 export default SignUpPage
-
-// value={username}
-//         onChange={(e) => setUsername(e.target.value)}
-
-//         onChange={handleImageChange}

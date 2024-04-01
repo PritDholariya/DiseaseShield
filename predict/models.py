@@ -22,6 +22,7 @@ class UserHistory(models.Model):
     symptoms = models.CharField(max_length=255, blank=True, null=True)
     disease = models.CharField(max_length=100, blank=True, null=True)
     prediction_result = models.CharField(max_length=100, blank=True, null=True)
+    prediction_percentage = models.FloatField(blank=True, null=True)  # Change to FloatField
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
