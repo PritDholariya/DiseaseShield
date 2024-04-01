@@ -21,7 +21,8 @@
     "react-router-dom": "^6.21.2",
     "react-slick": "^0.29.0",
     "react-toastify": "^10.0.3",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "swiper": "^11.0.7"
   },
   "devDependencies": {
     "@iconify/react": "^4.1.1",

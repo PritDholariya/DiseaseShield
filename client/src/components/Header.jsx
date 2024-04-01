@@ -23,22 +23,19 @@ export default function Header({children}) {
               active
             />
             <IconText
-              iconName={"material-symbols:search-rounded"}
-              displayText={"Search"}
-            />
-            <IconText
               iconName={"icomoon-free:books"}
               displayText={"History"}
               targetLink={'/history'}
             />
             <IconText
               iconName={"material-symbols:add-box"}
-              displayText={"Check disease"}
+              targetLink={"/disease"}
+              displayText={"Disease Lookup"}
             />
             <IconText
               iconName={"jam:medical"}
-              targetLink={"/disease"}
-              displayText={"Check from symptoms"}
+              targetLink={"/symtoms"}
+              displayText={"SymptoScan"}
             />
             <IconText
               iconName={"mdi:register"}

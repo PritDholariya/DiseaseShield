@@ -34,7 +34,7 @@ const CustomModal = ({ isOpen, onRequestClose, predictionResult , disease}) => {
       <div className="text-center p-4">
         <h2 className="text-2xl font-bold text-red-800 mb-2">Prediction Result</h2>
         <p className={`text-${predictionResult ? "amber-900" : "green"} mb-4`}>
-          {predictionResult ? `Person has ${disease}` : `Person does not have ${disease}`}
+          {predictionResult ? `You may have ${disease}` : `You does not have ${disease}`}
         </p>
         <button
           onClick={onRequestClose}

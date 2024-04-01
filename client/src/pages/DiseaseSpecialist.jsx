@@ -16,7 +16,7 @@ export default function DiseaseSpecialist() {
     <LoggedInHeader curActiveScreen={"disease"}>
     <div className="clinic-specialties bg-gray-100 p-6 rounded-md w-full shadow-md">
       <h2 className="text-3xl font-bold text-gray-800 mb-4">Try And Kill Your Fear😊</h2>
-      <div className="grid grid-cols-3 gap-4 text-center ml-7">
+      <div className="grid grid-cols-3 gap-4 text-center ml-7 mt-8">
         {specialties.map((specialty, index) => (
           <Link to={specialty.link} key={index} className="hover:bg-gray-200 transition duration-300 ease-in-out transform hover:scale-105">
             <div className="flex flex-col items-center bg-white p-4 rounded-md shadow-md">

@@ -97,14 +97,14 @@ export default function LoggedInHeader({ children, curActiveScreen, setisAuthent
             />
             <IconText
               iconName={"material-symbols:add-box"}
-              displayText={"Check disease"}
+              displayText={"Disease Lookup"}
               targetLink={"/disease"}
               active={curActiveScreen === "disease"}
 
               />
               <IconText
                 iconName={"jam:medical"}
-                displayText={"Check from symptoms"}
+                displayText={"SymptoScan"}
                 targetLink={"/symtoms"}
                 active={curActiveScreen === "symtoms"}
 

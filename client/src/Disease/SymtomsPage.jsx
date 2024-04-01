@@ -2,19 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LoggedInHeader from '../components/LoggedInHeader';
 import { FiPlus, FiTrash } from 'react-icons/fi';
-import Modal from 'react-modal';
 
 const SymptomsPage = () => {
   const [symptoms, setSymptoms] = useState([]);
   const [newSymptom, setNewSymptom] = useState('');
   const [error, setError] = useState('');
   const [testResult, setTestResult] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
   const symptomsList = [
     'itching', 'skin_rash', 'nodal_skin_eruptions', 'continuous_sneezing', 'shivering',
     'chills', 'joint_pain', 'stomach_pain', 'acidity', 'ulcers_on_tongue', 'muscle_wasting',
-    'vomiting', 'burning_micturition', 'spotting_urination', 'fatigue', 'weight_gain', 'anxiety',
+    'vomiting', 'burning_micturition', 'spotting_ urination', 'fatigue', 'weight_gain', 'anxiety',
     'cold_hands_and_feets', 'mood_swings', 'weight_loss', 'restlessness', 'lethargy', 'patches_in_throat',
     'irregular_sugar_level', 'cough', 'high_fever', 'sunken_eyes', 'breathlessness', 'sweating',
     'dehydration', 'indigestion', 'headache', 'yellowish_skin', 'dark_urine', 'nausea',
@@ -29,7 +27,7 @@ const SymptomsPage = () => {
     'excessive_hunger', 'extra_marital_contacts', 'drying_and_tingling_lips', 'slurred_speech',
     'knee_pain', 'hip_joint_pain', 'muscle_weakness', 'stiff_neck', 'swelling_joints',
     'movement_stiffness', 'spinning_movements', 'loss_of_balance', 'unsteadiness',
-    'weakness_of_one_body_side', 'loss_of_smell', 'bladder_discomfort', 'foul_smell_of_urine',
+    'weakness_of_one_body_side', 'loss_of_smell', 'bladder_discomfort', 'foul_smell_of urine',
     'continuous_feel_of_urine', 'passage_of_gases', 'internal_itching', 'toxic_look_(typhos)',
     'depression', 'irritability', 'muscle_pain', 'altered_sensorium', 'red_spots_over_body',
     'belly_pain', 'abnormal_menstruation', 'dischromic_patches', 'watering_from_eyes',
@@ -39,7 +37,7 @@ const SymptomsPage = () => {
     'history_of_alcohol_consumption', 'fluid_overload', 'blood_in_sputum',
     'prominent_veins_on_calf', 'palpitations', 'painful_walking', 'pus_filled_pimples',
     'blackheads', 'scurring', 'skin_peeling', 'silver_like_dusting', 'small_dents_in_nails',
-    'inflammatory_nails', 'blister', 'red_sore_around_nose', 'yellow_crust_ooze', 'prognosis'
+    'inflammatory_nails', 'blister', 'red_sore_around_nose', 'yellow_crust_ooze'
   ];
   const [currentuser, setCurrentuser] = useState();
   useEffect(() => {
@@ -51,9 +49,6 @@ const SymptomsPage = () => {
     setNewSymptom(event.target.value)
   };
 
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
 
   useEffect(() => {
     // Load symptoms from local storage on page load
@@ -96,7 +91,6 @@ const SymptomsPage = () => {
       });
       const prediction = response.data.prediction;
       setTestResult(prediction)
-      setModalIsOpen(true)
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -107,9 +101,9 @@ const SymptomsPage = () => {
       <div className='container w-4/5'>
         <div className="symptoms-page h-3/5 w-full">
           <div className="p-8 w-full">
-            <h2 className="text-3xl font-bold text-blue-800 mb-4 text-center">Symptoms Tracker</h2>
+            <h2 className="text-3xl font-bold text-blue-800 mb-4 text-center">SymptoScan</h2>
             {/* Your existing content */}
-            <p className="mb-4 text-center text-gray-600">Track and manage your symptoms! 🩹📋</p>
+            <p className="mb-4 text-center text-gray-600">Put symptoms here and kill your fear! 🩹📋</p>
 
             {/* Input for new symptom */}
             <div className="mb-4 flex items-center">
@@ -172,7 +166,7 @@ const SymptomsPage = () => {
               <button
                 type="button"
                 onClick={predictDisease}
-                className="mt-4 bg-green-500  text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none transition duration-300 ease-in-out"
+                className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none transition duration-300 ease-in-out"
               >
                 Predict Disease
               </button>
@@ -192,7 +186,7 @@ const SymptomsPage = () => {
                       <div class="flex items-center">
                         <div class="flex-1 min-w-0 ms-4">
                           <p class=" font-medium text-gray-900 truncate dark:text-red-500">
-                            {disease}
+                            {disease.disease} ({disease.probability * 100}%)
                           </p>
                         </div>
                       </div>

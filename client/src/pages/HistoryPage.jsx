@@ -40,7 +40,7 @@ const HistoryPage = () => {
 
   return (
     <LoggedInHeader curActiveScreen="history">
-      <div className="container mx-auto mt-14">
+      <div className="container w-4/5 mx-auto mt-14">
         <h2 className="text-3xl font-semibold text-gray-800 mb-4">History</h2>
         <div className="overflow-x-auto mt-20">
           <div className="max-h-96 overflow-y-auto">
@@ -52,7 +52,7 @@ const HistoryPage = () => {
                   <th className="border border-gray-200 px-4 py-2">Symptoms</th>
                   <th className="border border-gray-200 px-4 py-2">Disease</th>
                   <th className="border border-gray-200 px-4 py-2">Prediction Result</th>
-                  <th className="border border-gray-200 px-4 py-2">Timestamp</th>
+                  <th className="border border-gray-200 px-4 py-2">Time</th>
                 </tr>
               </thead>
               <tbody>
