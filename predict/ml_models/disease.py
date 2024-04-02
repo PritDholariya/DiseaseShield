@@ -15,11 +15,11 @@ import joblib
 
 # path = "C:\Users\pritd\OneDrive\Desktop\Machine_Learning\DiseaseShield\predict\ml_models"
 def load_or_train_model_heart():
-    model_file = 'E:\sem6\SDP\DiseaseShield\predict\ml_models\heart_disease_model.joblib'
-    scaler_file = 'E:\sem6\SDP\DiseaseShield\predict\ml_models\heart_disease_scaler.joblib'
+    # model_file = 'E:\sem6\SDP\DiseaseShield\predict\ml_models\heart_disease_model.joblib'
+    # scaler_file = 'E:\sem6\SDP\DiseaseShield\predict\ml_models\heart_disease_scaler.joblib'
     
-    # model_file = 'C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/heart_disease_model.joblib'
-    # scaler_file = 'C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/heart_disease_scaler.joblib'
+    model_file = 'C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/heart_disease_model.joblib'
+    scaler_file = 'C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/heart_disease_scaler.joblib'
 
     # If model file exists, load and return the model
     if os.path.exists(model_file) and os.path.exists(scaler_file):
@@ -31,7 +31,7 @@ def load_or_train_model_heart():
     # If model file doesn't exist, perform training and testing
     print("Training the model...")
     # Load the CSV data into a Pandas DataFrame
-    heart_data = pd.read_csv('E:\sem6\SDP\DiseaseShield\predict\ml_models\heart_disease_data.csv')
+    heart_data = pd.read_csv('C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/heart_disease_data.csv')
 
     # Splitting the Features and Target
     X = heart_data.drop(columns='target', axis=1)
@@ -81,8 +81,8 @@ def predict_heart_attack(input_data):
 
 
 def load_or_train_diabetes_model():
-    model_file = 'E:\sem6\SDP\DiseaseShield\predict\ml_models\diabetes_model.joblib'
-    scaler_file = 'E:\sem6\SDP\DiseaseShield\predict\ml_models\diabetes_scaler.joblib'
+    model_file = 'C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/diabetes_model.joblib'
+    scaler_file = 'C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/diabetes_scaler.joblib'
     
     # If model file exists, load and return the model
     if os.path.exists(model_file) and os.path.exists(scaler_file):
@@ -94,7 +94,7 @@ def load_or_train_diabetes_model():
     # If model file doesn't exist, perform training and testing
     print("Training the diabetes model...")
     # Load the diabetes dataset into a Pandas DataFrame
-    diabetes_dataset = pd.read_csv('E:\sem6\SDP\DiseaseShield\predict\ml_models\diabetes.csv')
+    diabetes_dataset = pd.read_csv('C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/diabetes.csv')
 
     # separating the data and labels
     X = diabetes_dataset.drop(columns='Outcome', axis=1)
@@ -140,8 +140,8 @@ def predict_diabetes(input_data):
         return 'The Person is diabetic', probability[0][1]  # Probability of being diabetic
 
 def load_or_train_model_parkinson():
-    model_file = 'E:\sem6\SDP\DiseaseShield\predict\ml_models\parkinson_model.joblib'
-    scaler_file = 'E:\sem6\SDP\DiseaseShield\predict\ml_models\parkinson_scaler.joblib'
+    model_file = 'C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/parkinson_model.joblib'
+    scaler_file = 'C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/parkinson_scaler.joblib'
     
     # If both model and scaler files exist, load and return them
     if os.path.exists(model_file) and os.path.exists(scaler_file):
@@ -154,7 +154,7 @@ def load_or_train_model_parkinson():
     print("Training the model for Parkinson's disease prediction...")
     
     # Load the data from CSV file into a Pandas DataFrame
-    parkinsons_data = pd.read_csv('E:\sem6\SDP\DiseaseShield\predict\ml_models\parkinsons.csv')
+    parkinsons_data = pd.read_csv('C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/parkinsons.csv')
 
     # Extract features and target variable
     X = parkinsons_data.drop(columns=['name', 'status'], axis=1)
@@ -215,7 +215,7 @@ def predict_from_symptoms(syptoms):
     # # Train the model
     # model.fit(X, y)
 
-    loaded_model = joblib.load('E:/sem6/SDP/DiseaseShield/predict/ml_models/symptoms_model.joblib')
+    loaded_model = joblib.load('C:/Users/pritd/OneDrive/Desktop/Machine_Learning/DiseaseShield/predict/ml_models/symptoms_model.joblib')
 
 
     # Get user input for symptoms

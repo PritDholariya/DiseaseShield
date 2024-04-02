@@ -145,7 +145,8 @@ def predict_disease(request):
             user=current.get("username"),
             prediction_type = "Symptoms",
             symptoms = symptoms_str,
-            prediction_result = prediction[0]['disease']
+            prediction_result = prediction[0]['disease'],
+            prediction_percentage = prediction[0]['probability']
         )
         # Return the prediction as a JSON response
         return Response({"status": "success", 'message': 'Prediction successful', 'prediction': prediction}, status=status.HTTP_200_OK)
