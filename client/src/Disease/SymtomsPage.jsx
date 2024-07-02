@@ -90,7 +90,9 @@ const SymptomsPage = () => {
         curruser : currentuser
       });
       const prediction = response.data.prediction;
-      setTestResult(prediction)
+      setTestResult(prediction);
+      clearAllSymptoms();
+
     } catch (error) {
       console.error("Error fetching user data:", error);
     }

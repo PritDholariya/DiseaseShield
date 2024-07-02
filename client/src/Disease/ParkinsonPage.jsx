@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import LoggedInHeader from '../components/LoggedInHeader';
 import axios from 'axios';
 import CustomModal from '../components/Modal';
+import InfoModel from "../components/InfoModel";
 
 const ParkinsonPage = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +34,9 @@ const ParkinsonPage = () => {
   const [predictionResult, setPredictionResult] = useState(false);
   const [currentuser, setCurrentuser] = useState();
   const [prob , setProb] = useState();
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [infodata, setInfodata] = useState();
+
   useEffect(() => {
     setCurrentuser(JSON.parse(localStorage.getItem('user')))
   }, []);
@@ -60,6 +64,46 @@ const ParkinsonPage = () => {
       console.error('Error fetching user data:', error);
     }
   };
+const getDescription = (field) => {
+  const descriptions = {
+    name: "ASCII subject name and recording number",
+    "MDVP:Fo(Hz)": "Average vocal fundamental frequency",
+    "MDVP:Fhi(Hz)": "Maximum vocal fundamental frequency",
+    "MDVP:Flo(Hz)": "Minimum vocal fundamental frequency",
+    "MDVP:Jitter(%)": "Several measures of variation in fundamental frequency",
+    "MDVP:Jitter(Abs)": "Several measures of variation in fundamental frequency",
+    "MDVP:RAP": "Several measures of variation in fundamental frequency",
+    "MDVP:PPQ": "Several measures of variation in fundamental frequency",
+    "Jitter:DDP": "Several measures of variation in fundamental frequency",
+    "MDVP:Shimmer": "Several measures of variation in amplitude",
+    "MDVP:Shimmer(dB)": "Several measures of variation in amplitude",
+    "Shimmer:APQ3": "Several measures of variation in amplitude",
+    "Shimmer:APQ5": "Several measures of variation in amplitude",
+    "MDVP:APQ": "Several measures of variation in amplitude",
+    "Shimmer:DDA": "Several measures of variation in amplitude",
+    NHR: "Two measures of ratio of noise to tonal components in the voice",
+    HNR: "Two measures of ratio of noise to tonal components in the voice",
+    status: "Health status of the subject (1 - Parkinson's, 0 - healthy)",
+    RPDE: "Two nonlinear dynamical complexity measures",
+    D2: "Two nonlinear dynamical complexity measures",
+    DFA: "Signal fractal scaling exponent",
+    spread1: "Three nonlinear measures of fundamental frequency variation",
+    spread2: "Three nonlinear measures of fundamental frequency variation",
+    PPE: "Three nonlinear measures of fundamental frequency variation",
+  };
+  return descriptions[field] || "";
+};
+
+ // Handle click on field info button
+ const handleFieldInfoClick = (info) => {
+  setInfoOpen(true);
+  setInfodata(info);
+  };
+
+  // Close the info modal
+  const closeinfoModal = () => {
+    setInfoOpen(false);
+  };
 
   const closeModal = () => {
     setModalOpen(false);
@@ -78,7 +122,9 @@ const ParkinsonPage = () => {
           <form onSubmit={handleFormSubmit} className="grid grid-cols-4 gap-4 mt-2">
             {Object.keys(formData).map((field) => (
               <div key={field} className="mb-2">
-                <label htmlFor={field} className="text-lg font-semibold text-green-800 block mb-1">
+                <label htmlFor={field} className="text-lg font-semibold text-green-800 block mb-1"
+                  onClick={() => handleFieldInfoClick(getDescription(field))}
+                  >
                   {field}
                 </label>
                 <input
@@ -103,6 +149,11 @@ const ParkinsonPage = () => {
           </form>
         </div>
       <CustomModal isOpen={modalOpen} onRequestClose={closeModal} predictionResult={predictionResult} disease={'Parkinson Disease'} prob ={prob}/>
+      <InfoModel
+          isOpen={infoOpen}
+          onRequestClose={closeinfoModal}
+          infodata={infodata}
+        />
       </div>
     </LoggedInHeader>
   );

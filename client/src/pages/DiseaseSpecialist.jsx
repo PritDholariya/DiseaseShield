@@ -30,16 +30,14 @@ export default function DiseaseSpecialist() {
           ))}
         </div>
         <div className="mt-8">
-  <h3 className="text-xl font-semibold mb-2">Advantages of Support Vector Machines (SVMs)</h3>
-  <ul className="list-disc list-inside text-sm text-gray-800  text-center">
-    <li className="mb-4">Effective in handling non-linear data by using different kernel functions.</li>
-    <li className="mb-4">Robustness to overfitting due to the regularization parameter.</li>
-    <li className="mb-4">Perform well in high-dimensional spaces, making them suitable for datasets with many features.</li>
-    <li className="mb-4">Aim to find a clear margin of separation between classes, leading to better generalization performance.</li>
-  </ul>
+  {/* <h3 className="text-xl font-semibold mb-2">Advantages of Support Vector Machines (SVMs)</h3> */}
+    {/* <ul className="list-disc list-inside text-sm text-gray-800  text-center">
+      <li className="mb-4">Effective in handling non-linear data by using different kernel functions.</li>
+      <li className="mb-4">Robustness to overfitting due to the regularization parameter.</li>
+      <li className="mb-4">Perform well in high-dimensional spaces, making them suitable for datasets with many features.</li>
+      <li className="mb-4">Aim to find a clear margin of separation between classes, leading to better generalization performance.</li>
+    </ul> */}
 </div>
-
-
 
       </div>
     </LoggedInHeader>
